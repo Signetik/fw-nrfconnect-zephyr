@@ -14,8 +14,7 @@
 #include <zephyr/types.h>
 
 #if defined(CONFIG_SOC_PART_NUMBER_SAML21J18B)
-//#include <saml21j18b.h>
-#include "../../modules/hal/atmel/asf/sam0/include/saml21/saml21j18b.h"
+#include <saml21j18b.h>
 #else
 #error Library does not support the specified device.
 #endif
