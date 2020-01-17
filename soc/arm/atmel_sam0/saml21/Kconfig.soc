@@ -1,0 +1,13 @@
+# Atmel SAML MCU series
+
+# Copyright (c) 2017 Google LLC.
+# SPDX-License-Identifier: Apache-2.0
+
+choice
+	prompt "Atmel SAML21 MCU Selection"
+	depends on SOC_SERIES_SAML21
+
+config SOC_PART_NUMBER_SAML21J18B
+	bool "SAML21J18B"
+
+endchoice

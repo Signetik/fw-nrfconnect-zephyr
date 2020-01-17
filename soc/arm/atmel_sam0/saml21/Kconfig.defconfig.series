@@ -1,0 +1,20 @@
+# Atmel SAML MCU series configuration options
+
+# Copyright (c) 2017 Google LLC.
+# SPDX-License-Identifier: Apache-2.0
+
+if SOC_SERIES_SAML21
+
+config SOC_SERIES
+	default "saml21"
+
+config SOC_PART_NUMBER
+	default "saml21j18b" if SOC_PART_NUMBER_SAML21J18B
+
+config NUM_IRQS
+	default 29
+
+config SYS_CLOCK_HW_CYCLES_PER_SEC
+	default 16000000
+
+endif # SOC_SERIES_SAML21
