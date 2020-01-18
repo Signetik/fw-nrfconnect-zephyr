@@ -1,191 +1,96 @@
-/*
- * Copyright (c) 2017 Google LLC.
+/**
+ * \file
  *
- * SPDX-License-Identifier: Apache-2.0
+ * \brief SAM System related functionality
+ *
+ * Copyright (C) 2012-2015 Atmel Corporation. All rights reserved.
+ *
+ * \asf_license_start
+ *
+ * \page License
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * 3. The name of Atmel may not be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * 4. This software may only be redistributed and used in connection with an
+ *    Atmel microcontroller product.
+ *
+ * THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+ * EXPRESSLY AND SPECIFICALLY DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * \asf_license_stop
+ *
  */
+/*
+ * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
+ */
+
+#include <system.h>
 
 /**
- * @file
- * @brief Atmel SAML MCU series initialization code
+ * \internal
+ * Dummy initialization function, used as a weak alias target for the various
+ * init functions called by \ref system_init().
  */
-
-#include <arch/cpu.h>
-#include <arch/arm/aarch32/cortex_m/cmsis.h>
-#include <device.h>
-#include <init.h>
-#include <kernel.h>
-#include <soc.h>
-
-static void flash_waitstates_init(void)
+void _system_dummy_init(void);
+void _system_dummy_init(void)
 {
-	/* One wait state at 48 MHz. */
-	NVMCTRL->CTRLB.bit.RWS = NVMCTRL_CTRLB_RWS_HALF_Val;
+	return;
 }
 
-/* Follows the same structure as the Arduino Zero, namely:
- *  XOSC32K -> GCLK1 -> DFLL48M -> GCLK0
- *  OSC8M -> 8 MHz -> GCLK3
+#if !defined(__DOXYGEN__)
+#  if defined(__GNUC__)
+//void system_clock_init(void) WEAK __attribute__((alias("_system_dummy_init")));
+void system_board_init(void);
+void _system_events_init(void);
+void _system_extint_init(void);
+void _system_divas_init(void);
+#  elif defined(__ICCARM__)
+void system_clock_init(void);
+void system_board_init(void);
+void _system_events_init(void);
+void _system_extint_init(void);
+void _system_divas_init(void);
+#    pragma weak system_clock_init=_system_dummy_init
+#    pragma weak system_board_init=_system_dummy_init
+#    pragma weak _system_events_init=_system_dummy_init
+#    pragma weak _system_extint_init=_system_dummy_init
+#    pragma weak _system_divas_init=_system_dummy_init
+#  endif
+#endif
+
+/**
+ * \brief Initialize system
+ *
+ * This function will call the various initialization functions within the
+ * system namespace. If a given optional system module is not available, the
+ * associated call will effectively be a NOP (No Operation).
+ *
+ * Currently the following initialization functions are supported:
+ *  - System clock initialization (via the SYSTEM CLOCK sub-module)
+ *  - Board hardware initialization (via the Board module)
+ *  - Event system driver initialization (via the EVSYS module)
+ *  - External Interrupt driver initialization (via the EXTINT module)
  */
-
-static void xosc_init(void)
-{
-#ifdef CONFIG_SOC_ATMEL_SAML_XOSC
-#error External oscillator support is not implemented.
-#endif
-}
-
-static void wait_gclk_synchronization(void)
-{
-#ifdef TODO
-	while (GCLK->STATUS.bit.SYNCBUSY) {
-	}
-#endif
-}
-
-static void xosc32k_init(void)
-{
-#ifdef TODO
-#ifdef CONFIG_SOC_ATMEL_SAML_XOSC32K
-	SYSCTRL->XOSC32K.reg = SYSCTRL_XOSC32K_STARTUP(6) |
-			       SYSCTRL_XOSC32K_XTALEN | SYSCTRL_XOSC32K_EN32K;
-
-	SYSCTRL->XOSC32K.bit.ENABLE = 1;
-	/* Wait for the crystal to stabalise. */
-	while (!SYSCTRL->PCLKSR.bit.XOSC32KRDY) {
-	}
-#endif
-#endif
-}
-
-static void osc32k_init(void)
-{
-#ifdef TODO
-#ifdef FUSES_OSC32K_CAL_ADDR
-	u32_t fuse = *(u32_t *)FUSES_OSC32K_CAL_ADDR;
-	u32_t calib = (fuse & FUSES_OSC32K_CAL_Msk) >> FUSES_OSC32K_CAL_Pos;
-#else
-	u32_t fuse = *(u32_t *)FUSES_OSC32KCAL_ADDR;
-	u32_t calib = (fuse & FUSES_OSC32KCAL_Msk) >> FUSES_OSC32KCAL_Pos;
-#endif
-
-	SYSCTRL->OSC32K.reg = SYSCTRL_OSC32K_CALIB(calib) |
-			      SYSCTRL_OSC32K_STARTUP(0x6u) |
-			      SYSCTRL_OSC32K_EN32K | SYSCTRL_OSC32K_ENABLE;
-
-	/* Wait for the oscillator to stabalise. */
-	while (!SYSCTRL->PCLKSR.bit.OSC32KRDY) {
-	}
-#endif
-}
-
-static void dfll_init(void)
-{
-#ifdef TODO
-	/* No prescaler */
-	GCLK->GENDIV.reg = GCLK_GENDIV_ID(1) | GCLK_GENDIV_DIV(0);
-	wait_gclk_synchronization();
-
-
-#if defined(CONFIG_SOC_ATMEL_SAML_XOSC32K_AS_MAIN)
-	/* Route XOSC32K to GCLK1 */
-	GCLK->GENCTRL.reg =
-	    GCLK_GENCTRL_ID(1) | GCLK_GENCTRL_SRC_XOSC32K | GCLK_GENCTRL_GENEN;
-#elif defined(CONFIG_SOC_ATMEL_SAML_OSC8M_AS_MAIN)
-	/* Route OSC8M to GCLK1 */
-	GCLK->GENCTRL.reg =
-	    GCLK_GENCTRL_ID(1) | GCLK_GENCTRL_SRC_OSC8M | GCLK_GENCTRL_GENEN;
-#else
-#error Unsupported main clock source.
-#endif
-
-	wait_gclk_synchronization();
-
-	/* Route GCLK1 to multiplexer 1 */
-	GCLK->CLKCTRL.reg =
-	    GCLK_CLKCTRL_ID(0) | GCLK_CLKCTRL_GEN_GCLK1 | GCLK_CLKCTRL_CLKEN;
-	wait_gclk_synchronization();
-
-	SYSCTRL->DFLLCTRL.reg = SYSCTRL_DFLLCTRL_ENABLE;
-	while (!SYSCTRL->PCLKSR.bit.DFLLRDY) {
-	}
-
-	u32_t mul = (SOC_ATMEL_SAM0_MCK_FREQ_HZ +
-		     SOC_ATMEL_SAM0_GCLK1_FREQ_HZ / 2) /
-		    SOC_ATMEL_SAM0_GCLK1_FREQ_HZ;
-
-	SYSCTRL->DFLLMUL.reg = SYSCTRL_DFLLMUL_CSTEP(31) |
-			       SYSCTRL_DFLLMUL_FSTEP(511) |
-			       SYSCTRL_DFLLMUL_MUL(mul);
-	while (!SYSCTRL->PCLKSR.bit.DFLLRDY) {
-	}
-
-	SYSCTRL->DFLLCTRL.reg |= SYSCTRL_DFLLCTRL_MODE |
-#ifdef SYSCTRL_DFLLCTRL_WAITLOCK
-				 SYSCTRL_DFLLCTRL_WAITLOCK |
-#endif
-				 SYSCTRL_DFLLCTRL_QLDIS;
-	while (!SYSCTRL->PCLKSR.bit.DFLLRDY) {
-	}
-
-	/* Enable the DFLL */
-	SYSCTRL->DFLLCTRL.bit.ENABLE = 1;
-
-	while (!SYSCTRL->PCLKSR.bit.DFLLLCKC || !SYSCTRL->PCLKSR.bit.DFLLLCKF) {
-	}
-
-	while (!SYSCTRL->PCLKSR.bit.DFLLRDY) {
-	}
-#endif
-}
-
-static void osc8m_init(void)
-{
-#ifdef TODO
-	/* Turn off the prescaler */
-	SYSCTRL->OSC8M.bit.PRESC = SYSCTRL_OSC8M_PRESC(0);
-	SYSCTRL->OSC8M.bit.ONDEMAND = 0;
-#endif
-}
-
-static void gclks_init(void)
-{
-#ifdef TODO
-	/* DFLL/1 -> GCLK0 */
-	GCLK->GENDIV.reg = GCLK_GENDIV_ID(0) | GCLK_GENDIV_DIV(0);
-	wait_gclk_synchronization();
-
-	GCLK->GENCTRL.reg = GCLK_GENCTRL_ID(0) | GCLK_GENCTRL_SRC_DFLL48M |
-			    GCLK_GENCTRL_IDC | GCLK_GENCTRL_GENEN;
-	wait_gclk_synchronization();
-
-	/* OSC8M/1 -> GCLK3 */
-	GCLK->GENCTRL.reg =
-	    GCLK_GENCTRL_ID(3) | GCLK_GENCTRL_SRC_OSC8M | GCLK_GENCTRL_GENEN;
-	wait_gclk_synchronization();
-
-	/* OSCULP32K/32 -> GCLK2 */
-	GCLK->GENDIV.reg = GCLK_GENDIV_ID(2) | GCLK_GENDIV_DIV(32 - 1);
-	wait_gclk_synchronization();
-
-	GCLK->GENCTRL.reg =
-	    GCLK_GENCTRL_ID(2) | GCLK_GENCTRL_SRC_OSC32K | GCLK_GENCTRL_GENEN;
-	wait_gclk_synchronization();
-#endif
-}
-
-static void dividers_init(void)
-{
-#ifdef TODO
-	/* Set the CPU, APBA, B, and C dividers */
-	PM->CPUSEL.reg = PM_CPUSEL_CPUDIV_DIV1;
-	PM->APBASEL.reg = PM_APBASEL_APBADIV_DIV1_Val;
-	PM->APBBSEL.reg = PM_APBBSEL_APBBDIV_DIV1_Val;
-	PM->APBCSEL.reg = PM_APBCSEL_APBCDIV_DIV1_Val;
-
-	/* TODO(mlhx): enable clock failure detection? */
-#endif
-}
-
 static int atmel_saml_init(struct device *arg)
 {
 	u32_t key;
@@ -194,19 +99,22 @@ static int atmel_saml_init(struct device *arg)
 
 	key = irq_lock();
 
-	flash_waitstates_init();
-	osc8m_init();
-	osc32k_init();
-	xosc_init();
-	xosc32k_init();
-	dfll_init();
-	gclks_init();
-	dividers_init();
+	/* Configure GCLK and clock sources according to conf_clocks.h */
+	system_clock_init();
 
-	/* Install default handler that simply resets the CPU
-	 * if configured in the kernel, NOP otherwise
-	 */
-	NMI_INIT();
+#ifdef TODO
+	/* Initialize board hardware */
+	system_board_init();
+
+	/* Initialize EVSYS hardware */
+	_system_events_init();
+
+	/* Initialize External hardware */
+	_system_extint_init();
+	
+	/* Initialize DIVAS hardware */
+	_system_divas_init();
+#endif
 
 	irq_unlock(key);
 
