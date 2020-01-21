@@ -1,0 +1,40 @@
+# Kconfig - HTU21D temperature sensor configuration options
+
+#
+# Copyright (c) 2016 Firmwave
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+menuconfig HTU21D
+	bool "HTU21D Temperature Sensor"
+	depends on I2C
+	help
+	  Enable the driver for Texas Instruments HTU21D High-Accuracy Digital
+	  Temperature Sensors.
+
+	  The TMP102 is compatible with the HTU21D but is less accurate and has
+	  been successfully tested with this driver.
+
+if HTU21D
+
+config HTU21D_NAME
+	string "Driver name"
+	default "HTU21D"
+	help
+	  Device name with which the HTU21D sensor is identified.
+
+config HTU21D_I2C_ADDR
+	hex "I2C address for HTU21D"
+	default 0x40
+	help
+	  I2C address of the HTU21D sensor.
+
+config HTU21D_I2C_MASTER_DEV_NAME
+	string "I2C master where HTU21D is connected"
+	default "I2C_2"
+	help
+	  Specify the device name of the I2C master device to which the
+	  HTU21D chip is connected.
+
+endif # HTU21D
