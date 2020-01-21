@@ -58,6 +58,10 @@ add_subdirectory_ifdef(CONFIG_SX9500		sx9500)
 add_subdirectory_ifdef(CONFIG_TH02		    th02)
 add_subdirectory_ifdef(CONFIG_TMP007		tmp007)
 add_subdirectory_ifdef(CONFIG_TMP112		tmp112)
+
+add_subdirectory_ifdef(CONFIG_HTU21D		htu21d)
+add_subdirectory_ifdef(CONFIG_LIS3DH		lis3dh)
+
 add_subdirectory_ifdef(CONFIG_TMP116		tmp116)
 add_subdirectory_ifdef(CONFIG_VL53L0X		vl53l0x)
 add_subdirectory_ifdef(CONFIG_TEMP_KINETIS	nxp_kinetis_temp)
