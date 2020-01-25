@@ -266,6 +266,11 @@ else() # NOT FIRST_BOILERPLATE_EXECUTION
   # images defined as non-secure.
   # TODO: Allow multiple non-secure images by using Kconfig to set the
   # secure/non-secure property rather than using a separate board definition.
+  if(${BOARD} STREQUAL signetik_sigcellns)
+    set(BOARD signetik_sigcell)
+    message("Changed board to secure signetik_sigcell (NOT NS)")
+  endif()
+
   if(${BOARD} STREQUAL nrf9160_pca10090ns)
     set(BOARD nrf9160_pca10090)
     message("Changed board to secure nrf9160_pca10090 (NOT NS)")
