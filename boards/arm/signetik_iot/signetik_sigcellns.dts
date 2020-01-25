@@ -1,0 +1,19 @@
+/*============================================================================*
+ *         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         *
+ *----------------------------------------------------------------------------*
+ *                                                              Signetik, LLC *
+ *                                                           www.signetik.com *
+ *                                      SPDX-License-Identifier: BSD-4-Clause *
+ *============================================================================*/
+
+/dts-v1/;
+#include <nordic/nrf9160ns_sica.dtsi>
+#include "signetik_sigcell_common.dts"
+
+/ {
+	chosen {
+		zephyr,flash = &flash0;
+		zephyr,sram = &sram0_ns;
+		zephyr,code-partition = &slot0_ns_partition;
+	};
+};

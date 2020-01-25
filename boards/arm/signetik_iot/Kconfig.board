@@ -1,0 +1,19 @@
+# //============================================================================//
+# //         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         //
+# //----------------------------------------------------------------------------//
+# //                                                              Signetik, LLC //
+# //                                                           www.signetik.com //
+# //                                      SPDX-License-Identifier: BSD-4-Clause //
+# //============================================================================//
+#
+# Kconfig - Signetik SigCell board configuration
+
+if SOC_NRF9160_SICA
+
+config BOARD_SIGNETIK_SIGCELL
+	bool "Signetik SigCell"
+
+config BOARD_SIGNETIK_SIGCELLNS
+	bool "Signetik SigCell non-secure"
+
+endif # SOC_NRF9160_SICA

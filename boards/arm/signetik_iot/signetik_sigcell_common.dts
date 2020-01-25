@@ -1,0 +1,159 @@
+/*============================================================================*
+ *         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         *
+ *----------------------------------------------------------------------------*
+ *                                                              Signetik, LLC *
+ *                                                           www.signetik.com *
+ *                                      SPDX-License-Identifier: BSD-4-Clause *
+ *============================================================================*/
+
+/ {
+	model = "Signetik SigCell Mainboard";
+	compatible = "signetik-sigcell", "nordic,nrf9160-sica",
+		     "nordic,nrf9160";
+
+	chosen {
+		zephyr,at-uart = &uart0;
+		zephyr,console = &uart1;
+		zephyr,shell-uart = &uart1;
+		zephyr,uart-mcumgr = &uart1;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		leden: led_en {
+			gpios = <&gpio0 21 GPIO_INT_ACTIVE_LOW>;
+			label = "Master LED Enablee";
+		};
+		ledr: led_r {
+			gpios = <&gpio0 23 GPIO_INT_ACTIVE_LOW>;
+			label = "Red LED";
+		};
+		ledg: led_g {
+			gpios = <&gpio0 24 GPIO_INT_ACTIVE_LOW>;
+			label = "Green LED";
+		};
+		ledb: led_b {
+			gpios = <&gpio0 25 GPIO_INT_ACTIVE_LOW>;
+			label = "Blue LED";
+		};
+	};
+
+    regulators {
+		compatible = "signetik,regulators";
+        lsense:  lsense_addon {
+            gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_LOW>;
+        };
+        accel:  accel_addon {
+            gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_LOW>;
+        };
+    };
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		leden = &leden;
+		ledr = &ledr;
+		ledg = &ledg;
+		ledb = &ledb;
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&uart0 {
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <29>;
+	rx-pin = <28>;
+    /*
+	rts-pin = <27>;
+	cts-pin = <26>;
+    */
+};
+
+&uart1 {
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <8>;
+	rx-pin = <9>;
+};
+
+&i2c2 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	sda-pin = <19>;
+	scl-pin = <18>;
+};
+
+&timer0 {
+	status = "okay";
+};
+
+&timer1 {
+	status = "okay";
+};
+
+&timer2 {
+	status = "okay";
+};
+
+&flash0 {
+	/*
+	 * For more information, see:
+	 * http://docs.zephyrproject.org/latest/guides/dts/index.html#flash-partitions
+	 */
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x00000000 0x10000>;
+		};
+		slot0_partition: partition@10000 {
+			label = "image-0";
+		};
+		slot0_ns_partition: partition@40000 {
+			label = "image-0-nonsecure";
+		};
+		slot1_partition: partition@80000 {
+			label = "image-1";
+		};
+		slot1_ns_partition: partition@b0000 {
+			label = "image-1-nonsecure";
+		};
+		scratch_partition: partition@f0000 {
+			label = "image-scratch";
+			reg = <0x000f0000 0xa000>;
+		};
+		storage_partition: partition@fa000 {
+			label = "storage";
+			reg = <0x000fa000 0x00006000>;
+		};
+	};
+};
+
+/ {
+	/* SRAM allocated and used by the BSD library */
+	sram0_bsd: memory@20010000 {
+		compatible = "mmio-sram";
+	};
+
+	/* SRAM allocated to the Non-Secure image */
+	sram0_ns: memory@20020000 {
+		compatible = "mmio-sram";
+	};
+};
+
+/* Include partition configuration file */
+#include "signetik_sigcell_partition_conf.dts"

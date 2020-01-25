@@ -1,0 +1,12 @@
+# //============================================================================//
+# //         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         //
+# //----------------------------------------------------------------------------//
+# //                                                              Signetik, LLC //
+# //                                                           www.signetik.com //
+# //                                      SPDX-License-Identifier: BSD-4-Clause //
+# //============================================================================//
+# Kconfig - Signetik SigCell board configuration
+
+if BOARD_SIGNETIK_SIGCELLx || BOARD_SIGNETIK_SIGCELLNSx
+
+endif # BOARD_SIGNETIK_SIGCELL || BOARD_SIGNETIK_SIGCELLNS
