@@ -6,6 +6,8 @@
  *                                      SPDX-License-Identifier: BSD-4-Clause *
  *============================================================================*/
 
+#include <dt-bindings/regulator/regulator.h>
+
 / {
 	model = "Signetik SigCell Mainboard";
 	compatible = "signetik-sigcell", "nordic,nrf9160-sica",
