@@ -1,0 +1,23 @@
+# Kconfig - I2S (Inter-IC Sound) driver configuration options
+#
+# Copyright (c) 2017 Piotr Mienkowski
+# SPDX-License-Identifier: Apache-2.0
+#
+
+#
+# Regulators
+#
+menuconfig REGULATOR
+	bool "Regulator drivers"
+	help
+	  Enable support for regulators.
+
+if REGULATOR
+
+config REGULATOR_GENERIC
+	bool "Generic Regulator"
+	default no
+	help
+	  Enable support for generic regulator
+
+endif # REGULATOR
