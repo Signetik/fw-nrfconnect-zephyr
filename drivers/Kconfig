@@ -91,4 +91,6 @@ source "drivers/video/Kconfig"
 
 source "drivers/eeprom/Kconfig"
 
+source "drivers/regulator/Kconfig"
+
 endmenu
