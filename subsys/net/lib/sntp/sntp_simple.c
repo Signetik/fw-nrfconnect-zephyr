@@ -23,7 +23,7 @@ int sntp_simple(const char *server, u32_t timeout, struct sntp_time *time)
 	/* 123 is the standard SNTP port per RFC4330 */
 	res = net_getaddrinfo_addr_str(server, "123", &hints, &addr);
 
-	if (res < 0) {
+	if (res != 0) {
 		/* Just in case, as namespace for getaddrinfo errors is
 		 * different from errno errors.
 		 */
