@@ -106,7 +106,7 @@ static int htu21d_readValue(struct htu21d_data *drv_data,
         
           validResult = i2c_write(drv_data->i2c, sendbuf, 1, HTU21D_I2C_ADDRESS);
           if (validResult < 0) {
-                printk("Failed to access to Device\n");
+                LOG_ERR("Failed to access to Device");
 		return -EIO;
           }
           for (counter = 0; counter < MAX_COUNTER; counter++){
@@ -144,7 +144,7 @@ static int htu21d_readHumidity (struct htu21d_data *drv_data)
         ret = htu21d_readValue(drv_data, TRIGGER_HUMD_MEASURE_NOHOLD);
         if (ret != 0) 
         {
-            printk(" Failed to read Humidity");
+            LOG_ERR("Failed to read Humidity");
             return -EIO;
         }
   
@@ -169,7 +169,7 @@ static int htu21d_readTemperature(struct htu21d_data *drv_data)
       ret = htu21d_readValue(drv_data, TRIGGER_TEMP_MEASURE_NOHOLD);
       if (ret != 0) 
         {
-            printk(" Failed to read Temperature\n");
+            LOG_ERR("Failed to read Temperature\n");
             return -EIO;
         }
       //Given the raw temperature data, calculate the actual temperature
