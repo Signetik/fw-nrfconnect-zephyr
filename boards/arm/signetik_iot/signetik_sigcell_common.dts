@@ -39,6 +39,19 @@
 		};
 	};
 
+	pwmleds {
+		compatible = "pwm-leds";
+		pwm_ledr: pwm_led_r {
+			pwms = <&pwm0 23>;
+		};
+		pwm_ledg: pwm_led_g {
+			pwms = <&pwm1 24>;
+		};
+		pwm_ledb: pwm_led_b {
+			pwms = <&pwm2 25>;
+		};
+	};
+
     regulators {
 		compatible = "signetik,regulators";
         lsense:  lsense_addon {
@@ -55,6 +68,9 @@
 		ledr = &ledr;
 		ledg = &ledg;
 		ledb = &ledb;
+		pwm-ledr = &pwm_ledr;
+		pwm-ledg = &pwm_ledg;
+		pwm-ledb = &pwm_ledb;
 	};
 };
 
@@ -93,6 +109,21 @@
 	status = "okay";
 	sda-pin = <19>;
 	scl-pin = <18>;
+};
+
+&pwm0 {
+	status = "okay";
+	ch0-pin = <23>;
+};
+
+&pwm1 {
+	status = "okay";
+	ch0-pin = <24>;
+};
+
+&pwm2 {
+	status = "okay";
+	ch0-pin = <25>;
 };
 
 &timer0 {
