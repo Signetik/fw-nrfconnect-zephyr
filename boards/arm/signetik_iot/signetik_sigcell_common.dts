@@ -23,7 +23,7 @@
 		compatible = "gpio-leds";
 		leden: led_en {
 			gpios = <&gpio0 21 GPIO_INT_ACTIVE_LOW>;
-			label = "Master LED Enablee";
+			label = "Master LED Enable";
 		};
 		ledr: led_r {
 			gpios = <&gpio0 23 GPIO_INT_ACTIVE_LOW>;
