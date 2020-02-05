@@ -18,6 +18,12 @@ config REGULATOR_GENERIC
 	bool "Generic Regulator"
 	default no
 	help
-	  Enable support for generic regulator
+	  Enable support for generic regulator.
+
+config REGULATOR_ALWAYSON
+	bool "Regulator Always Enabled"
+	default no
+	help
+	  Force regulator to be on during driver load and remain on.
 
 endif # REGULATOR
