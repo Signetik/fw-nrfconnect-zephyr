@@ -8,7 +8,7 @@ menuconfig CONSOLE_SUBSYS
 
 if CONSOLE_SUBSYS
 
-choice
+choice CONSOLE_GETCHARLINE
 	prompt "Console 'get' function selection"
 	optional
 	depends on UART_CONSOLE && SERIAL_SUPPORT_INTERRUPT
