@@ -58,7 +58,7 @@
             gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_LOW>;
         };
         accel:  accel_addon {
-            gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_LOW>;
+            gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_HIGH>;
         };
     };
 
