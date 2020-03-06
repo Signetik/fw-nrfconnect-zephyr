@@ -1,0 +1,14 @@
+identifier: signetik_sigcell_modem
+name: Signetik-SigCell-Modem
+type: mcu
+arch: arm
+toolchain:
+  - gnuarmemb
+  - xtools
+  - zephyr
+ram: 64
+flash: 256
+supported:
+  - i2c
+  - pwm
+  - watchdog
