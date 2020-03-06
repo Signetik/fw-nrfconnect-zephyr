@@ -107,8 +107,8 @@
 &i2c2 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
-	sda-pin = <19>;
-	scl-pin = <18>;
+	sda-pin = <18>;
+	scl-pin = <19>;
 };
 
 &pwm0 {
