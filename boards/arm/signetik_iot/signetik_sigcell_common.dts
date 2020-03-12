@@ -89,19 +89,19 @@
 &uart0 {
 	status = "okay";
 	current-speed = <115200>;
-	tx-pin = <29>;
-	rx-pin = <28>;
-    /*
-	rts-pin = <27>;
-	cts-pin = <26>;
-    */
+	tx-pin = <8>;
+	rx-pin = <9>;
 };
 
 &uart1 {
 	status = "okay";
 	current-speed = <115200>;
-	tx-pin = <8>;
-	rx-pin = <9>;
+	tx-pin = <26>;
+	rx-pin = <27>;
+	/*
+	rts-pin = <12>;
+	cts-pin = <10>;
+	*/
 };
 
 &i2c2 {
