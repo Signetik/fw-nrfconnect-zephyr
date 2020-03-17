@@ -60,3 +60,20 @@ DEVICE_AND_API_INIT(accel_reg, "accel_reg", regulator_init, &accel_reg_data,
 		    &accel_reg_config, PRE_KERNEL_2, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,
                     &accel_reg_api);
 #endif
+
+DEVICE_DECLARE(modbus_reg);
+
+static struct regulator_data modbus_reg_data;
+static struct regulator_config modbus_reg_config = {
+    .en_cont = DT_SIGNETIK_REGULATORS_MODBUS_ADDON_GPIOS_CONTROLLER,
+    .en_pin = DT_SIGNETIK_REGULATORS_MODBUS_ADDON_GPIOS_PIN,
+    .flags = DT_SIGNETIK_REGULATORS_MODBUS_ADDON_GPIOS_FLAGS,
+    .use_init = 1,
+};
+static struct regulator_api modbus_reg_api = {
+    .na = NULL
+};
+DEVICE_AND_API_INIT(modbus_reg, "modbus_reg", regulator_init, &modbus_reg_data,
+		    &modbus_reg_config, PRE_KERNEL_2, CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,
+                    &modbus_reg_api);
+

@@ -54,11 +54,11 @@
 
     regulators {
 		compatible = "signetik,regulators";
-        lsense:  lsense_addon {
-            gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_LOW>;
-        };
         accel:  accel_addon {
             gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_HIGH>;
+        };
+        modbus:  modbus_addon {
+            gpios = <&gpio0 18 REGULATOR_ENABLE_ACTIVE_LOW>;
         };
     };
 
@@ -96,8 +96,14 @@
 &uart1 {
 	status = "okay";
 	current-speed = <115200>;
+/* OLD
 	tx-pin = <26>;
 	rx-pin = <27>;
+*/
+	tx-pin = <29>;
+	rx-pin = <28>;
+/*	tx-pin = <8>;
+	rx-pin = <9>;*/
 	/*
 	rts-pin = <12>;
 	cts-pin = <10>;
@@ -107,7 +113,7 @@
 &i2c2 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
-	sda-pin = <18>;
+	sda-pin = <17>;
 	scl-pin = <19>;
 };
 
