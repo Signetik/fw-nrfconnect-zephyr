@@ -4,13 +4,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 #include <device.h>
-#include <i2c.h>
-#include <misc/byteorder.h>
-#include <misc/util.h>
+#include <drivers/i2c.h>
+#include <sys/byteorder.h>
+#include <sys/util.h>
 #include <kernel.h>
-#include <sensor.h>
+#include <drivers/sensor.h>
 #include <stdint.h>
-#include <gpio.h>
+#include <drivers/gpio.h>
 #include <string.h>
 
 
