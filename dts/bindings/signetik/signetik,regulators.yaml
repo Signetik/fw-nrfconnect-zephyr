@@ -1,15 +1,12 @@
 # Copyright (c) 2018, Linaro Limited
 # SPDX-License-Identifier: Apache-2.0
 
-title: Signetik Regulators
-
 description: Signetik Regulators
 
 compatible: "signetik,regulators"
 
 child-binding:
-    title: Signetik Regulator Node
-    description: Signetik Regulator Nodee
+    description: Signetik Regulator Node
     properties:
        gpios:
           type: phandle-array
