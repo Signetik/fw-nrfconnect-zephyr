@@ -57,6 +57,9 @@
         accel:  accel_addon {
             gpios = <&gpio0 11 REGULATOR_ENABLE_ACTIVE_HIGH>;
         };
+        lsense:  lsense_addon {
+            gpios = <&gpio0 17 REGULATOR_ENABLE_ACTIVE_LOW>;
+        };
         modbus:  modbus_addon {
             gpios = <&gpio0 18 REGULATOR_ENABLE_ACTIVE_LOW>;
         };
@@ -113,7 +116,7 @@
 &i2c2 {
 	compatible = "nordic,nrf-twim";
 	status = "okay";
-	sda-pin = <17>;
+	sda-pin = <18>;
 	scl-pin = <19>;
 };
 
