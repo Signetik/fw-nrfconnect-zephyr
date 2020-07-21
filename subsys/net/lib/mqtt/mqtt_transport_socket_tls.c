@@ -15,6 +15,7 @@ LOG_MODULE_REGISTER(net_mqtt_sock_tls, CONFIG_MQTT_LOG_LEVEL);
 #include <errno.h>
 #include <net/socket.h>
 #include <net/mqtt.h>
+#include <nrf_socket.h>
 
 #include "mqtt_os.h"
 
@@ -50,6 +51,10 @@ int mqtt_client_tls_connect(struct mqtt_client *client)
 	if (ret < 0) {
 		goto error;
 	}
+
+	nrf_sec_session_cache_t session_cache = 0;
+
+	nrf_setsockopt(client->transport.tls.sock, NRF_SOL_SECURE, NRF_SO_SEC_SESSION_CACHE, &session_cache, sizeof(session_cache));
 
 	if (tls_config->cipher_list != NULL && tls_config->cipher_count > 0) {
 		ret = setsockopt(client->transport.tls.sock, SOL_TLS,
