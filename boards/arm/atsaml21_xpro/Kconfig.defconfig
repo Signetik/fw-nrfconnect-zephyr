@@ -1,0 +1,11 @@
+# SAM L21 Xplained Pro board configuration
+
+# Copyright (c) 2018 Bryan O'Donoghue
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_ATSAML21_XPRO
+
+config BOARD
+	default "atsaml21_xpro"
+
+endif # BOARD_ATSAML21_XPRO

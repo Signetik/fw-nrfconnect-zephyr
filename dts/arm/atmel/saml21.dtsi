@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2017 Google LLC.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <atmel/saml.dtsi>
+
+/ {
+    /*
+	aliases {
+		tc-4 = &tc4;
+	};
+
+	soc {
+		usb0: usb@41000000 {
+			compatible = "atmel,sam0-usb";
+			status = "disabled";
+			reg = <0x41000000 0x1000>;
+			interrupts = <7 0>;
+			num-bidir-endpoints = <8>;
+			label = "USB0";
+		};
+
+		dma: dmac@44000400 {
+			compatible = "atmel,sam0-dmac";
+			reg = <0x44000400 0x50>;
+			interrupts = <6 0>;
+			label = "DMA_0";
+		};
+
+		tc3: tc@42000800 {
+			compatible = "atmel,sam0-tc32";
+			reg = <0x43000800 0x20>;
+			interrupts = <21 0>;
+			label = "TIMER_4";
+		};
+	};
+*/
+};
+
+&sercom0 {
+	interrupts = <8 0>;
+};
+
+&sercom1 {
+	interrupts = <9 0>;
+};
+
+&sercom2 {
+	interrupts = <10 0>;
+};
+
+&sercom3 {
+	interrupts = <11 0>;
+};
+
+&sercom4 {
+	interrupts = <12 0>;
+};
+
+&tc4 {
+	interrupts = <19 0>;
+};
+
+&adc {
+	interrupts = <22 0>;
+};
