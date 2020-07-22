@@ -21,13 +21,20 @@ manifest:
   remotes:
     - name: upstream
       url-base: https://github.com/zephyrproject-rtos
+    - name: signetik
+      url-base: git@git.signetik.com:signetik-iot
 
   #
   # Please add items below based on alphabetical order
   projects:
-    - name: hal_atmel
-      revision: 5690f5b84495c8b657ff204c5c827df1ab9e12e3
+    - name: signetik
+      repo-path: sensor/cellular-iot
+      remote: signetik
+      revision: develop
+    - name: zephyr-hal_atmel
+      revision: feature/saml21
       path: modules/hal/atmel
+      remote: signetik
     - name: canopennode
       path: modules/lib/canopennode
       revision: 5c6b0566d56264efd4bf23ed58bc7cb8b32fe063
