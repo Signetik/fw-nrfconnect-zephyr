@@ -76,6 +76,14 @@
 	status = "okay";
 };
 
+/*
+ * TP1 - UART_TXD (5) - P0.29
+ * TP2 - UART_RXD (6) - P0.28
+ * TP5 - UART_TXD1 (10) - P0.08
+ * TP7 - UART_RXD1 (12) - P0.09
+ */
+
+/* Console */
 &uart0 {
 	status = "okay";
 	current-speed = <115200>;
@@ -83,18 +91,20 @@
 	rx-pin = <7>;
 };
 
+/* AT */
 &uart1 {
-	status = "okay";
-	current-speed = <115200>;
-	tx-pin = <8>;
-	rx-pin = <9>;
-};
-
-&uart3 {
 	status = "okay";
 	current-speed = <115200>;
 	tx-pin = <29>;
 	rx-pin = <28>;
+};
+
+/* Commands */
+&uart3 {
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <8>;
+	rx-pin = <9>;
 };
 
 &pwm0 {
