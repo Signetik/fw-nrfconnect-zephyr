@@ -102,16 +102,16 @@
 &uart1 {
 	status = "okay";
 	current-speed = <115200>;
-	tx-pin = <29>;
-	rx-pin = <28>;
+	tx-pin = <8>;
+	rx-pin = <9>;
 };
 
 /* Commands */
 &uart3 {
 	status = "okay";
 	current-speed = <115200>;
-	tx-pin = <8>;
-	rx-pin = <9>;
+	tx-pin = <29>;
+	rx-pin = <28>;
 };
 
 &pwm0 {
