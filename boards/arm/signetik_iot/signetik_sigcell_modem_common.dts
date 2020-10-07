@@ -52,6 +52,13 @@
 		};
 	};
 
+	regulators {
+		compatible = "signetik,regulators";
+		gps: gps_en {
+			gpios = <&gpio0 55 REGULATOR_ENABLE_ACTIVE_HIGH>;
+		};
+	};
+
 	/* These aliases are provided for compatibility with samples */
 	aliases {
 		leden = &leden;
