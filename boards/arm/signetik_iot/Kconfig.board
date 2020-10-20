@@ -16,16 +16,10 @@ config BOARD_SIGNETIK_SIGCELL
 config BOARD_SIGNETIK_SIGCELLNS
 	bool "Signetik SigCell non-secure"
 
-config BOARD_SIGNETIK_SIGCELL_MODEM
-	bool "Signetik SigCell Modem"
-
-config BOARD_SIGNETIK_SIGCELL_MODEMNS
-	bool "Signetik SigCell Modem non-secure"
-
 config BOARD_SIGNETIK_SIGCELL_TEST
-	bool "Signetik SigCell Modem"
+	bool "Signetik SigCell Test"
 
 config BOARD_SIGNETIK_SIGCELL_TESTNS
-	bool "Signetik SigCell Modem non-secure"
+	bool "Signetik SigCell Test non-secure"
 
 endif # SOC_NRF9160_SICA
