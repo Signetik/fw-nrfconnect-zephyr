@@ -62,14 +62,14 @@ DEVICE_AND_API_INIT(accel_reg, "accel_reg", regulator_init, &accel_reg_data,
 #endif
 
 // GPS Enable
-#if defined(DT_SIGNETIK_REGULATORS_GPS_GPIOS_CONTROLLER)
+#if defined(DT_SIGNETIK_REGULATORS_GPS_EN_GPIOS_CONTROLLER)
 DEVICE_DECLARE(gps_reg);
 
 static struct regulator_data gps_reg_data;
 static struct regulator_config gps_reg_config = {
-	.en_cont = DT_SIGNETIK_REGULATORS_GPS_GPIOS_CONTROLLER,
-	.en_pin = DT_SIGNETIK_REGULATORS_GPS_GPIOS_PIN,
-	.flags = DT_SIGNETIK_REGULATORS_GPS_GPIOS_FLAGS,
+	.en_cont = DT_SIGNETIK_REGULATORS_GPS_EN_GPIOS_CONTROLLER,
+	.en_pin = DT_SIGNETIK_REGULATORS_GPS_EN_GPIOS_PIN,
+	.flags = DT_SIGNETIK_REGULATORS_GPS_EN_GPIOS_FLAGS,
 	.use_init = 1,
 };
 static struct regulator_api gps_reg_api = {
