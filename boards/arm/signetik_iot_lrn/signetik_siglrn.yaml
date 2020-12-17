@@ -1,0 +1,15 @@
+identifier: signetik_siglrn
+name: Signetik-SigLrn
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+  - xtools
+supported:
+  - adc
+  - ble
+  - pwm
+  - watchdog
+  - spi
+  - gpio

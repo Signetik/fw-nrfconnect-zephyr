@@ -1,0 +1,198 @@
+/*
+ * Copyright (c) 2018-2020 Nordic Semiconductor ASA
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+
+/ {
+	model = "Signetik Sig LRN";
+	compatible = "nordic,nrf52840-qiaa", "nordic,nrf52840";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,uart-mcumgr = &uart0;
+		zephyr,bt-mon-uart = &uart0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		leden: led_en {
+			gpios = <&gpio0 9 GPIO_ACTIVE_LOW>;
+			label = "Master LED Enable";
+		};
+		ledr: led_r {
+			gpios = <&gpio1 4 GPIO_ACTIVE_LOW>;
+			label = "Red LED";
+		};
+		ledg: led_g {
+			gpios = <&gpio1 2 GPIO_ACTIVE_LOW>;
+			label = "Green LED";
+		};
+		ledb: led_b {
+			gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+			label = "Blue LED";
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+		pwm_ledr: pwm_led_r {
+			pwms = <&pwm0 36>;
+		};
+		pwm_ledg: pwm_led_g {
+			pwms = <&pwm1 34>;
+		};
+		pwm_ledb: pwm_led_b {
+			pwms = <&pwm2 38>;
+		};
+	};
+
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		leden = &leden;
+		ledr = &ledr;
+		ledg = &ledg;
+		ledb = &ledb;
+		pwm-ledr = &pwm_ledr;
+		pwm-ledg = &pwm_ledg;
+		pwm-ledb = &pwm_ledb;
+		led0 = &ledr;
+		led1 = &ledg;
+		led2 = &ledb;
+		pwm-led0 = &pwm_ledr;
+		pwm-led1 = &pwm_ledg;
+		pwm-led2 = &pwm_ledb;
+		lora0 = &lora;
+	};
+
+};
+
+&adc {
+	status = "okay";
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+/* Commands */
+&uart0 {
+	compatible = "nordic,nrf-uart";
+	current-speed = <115200>;
+	status = "okay";
+	tx-pin = <10>;
+	rx-pin = <13>;
+	rts-pin = <20>;
+	cts-pin = <32>;
+};
+
+/* Console */
+&uart1 {
+	compatible = "nordic,nrf-uart";
+	status = "okay";
+	current-speed = <115200>;
+	tx-pin = <17>;
+	rx-pin = <15>;
+};
+/*
+&pwm0 {
+	status = "okay";
+	ch0-pin = <36>;
+};
+
+&pwm1 {
+	status = "okay";
+	ch0-pin = <34>;
+};
+
+&pwm2 {
+	status = "okay";
+	ch0-pin = <38>;
+};
+*/
+&spi0 {
+	compatible = "nordic,nrf-spi";
+	status = "okay";
+	sck-pin = <40>;
+	mosi-pin = <11>;
+	miso-pin = <13>;
+	cs-gpios = <&gpio0 4 0>;
+	lora: sx1262@0 {
+		compatible = "semtech,sx1262";
+		reg = <0>;
+		label = "sx1262";
+		reset-gpios = <&gpio0 8 GPIO_ACTIVE_LOW>;
+		busy-gpios = <&gpio1 9 0>;
+		antenna-enable-gpios = <&gpio1 7 0>;
+		dio1-gpios = <&gpio0 14 0>;
+		radio-enable-gpios = <&gpio0 7 0>;
+		spi-max-frequency = <1000000>;
+	};
+};
+
+&timer0 {
+	status = "okay";
+};
+
+&timer1 {
+	status = "okay";
+};
+
+&timer2 {
+	status = "okay";
+};
+
+&flash0 {
+	/*
+	 * For more information, see:
+	 * https://docs.zephyrproject.org/latest/guides/dts/legacy-macros.html#legacy-flash-partitions
+	 */
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x000000000 0x0000C000>;
+		};
+		slot0_partition: partition@c000 {
+			label = "image-0";
+			reg = <0x0000C000 0x00067000>;
+		};
+		slot1_partition: partition@73000 {
+			label = "image-1";
+			reg = <0x00073000 0x00067000>;
+		};
+		scratch_partition: partition@da000 {
+			label = "image-scratch";
+			reg = <0x000da000 0x0001e000>;
+		};
+
+		/*
+		 * The flash starting at 0x000f8000 and ending at
+		 * 0x000fffff is reserved for use by the application.
+		 */
+
+		/*
+		 * Storage partition will be used by FCB/LittleFS/NVS
+		 * if enabled.
+		 */
+		storage_partition: partition@f8000 {
+			label = "storage";
+			reg = <0x000f8000 0x00008000>;
+		};
+	};
+};
