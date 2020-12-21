@@ -5,6 +5,12 @@
 include: spi-device.yaml
 
 properties:
+    radio-enable-gpios:
+      type: phandle-array
+      required: false
+      description: |
+        Radio module power enable pin.
+
     reset-gpios:
       type: phandle-array
       required: true

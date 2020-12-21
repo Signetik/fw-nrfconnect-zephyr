@@ -1,0 +1,19 @@
+# //============================================================================//
+# //         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         //
+# //----------------------------------------------------------------------------//
+# //                                                              Signetik, LLC //
+# //                                                           www.signetik.com //
+# //                                      SPDX-License-Identifier: BSD-4-Clause //
+# //============================================================================//
+#
+# Kconfig - Signetik SigLRN board configuration
+
+if SOC_NRF52840_QIAA
+
+config BOARD_SIGNETIK_SIGLRN
+	bool "Signetik SigLRN"
+
+config BOARD_SIGNETIK_SIGLRN_TEST
+	bool "Signetik SigLRN Test"
+
+endif # SOC_NRF52840_QIAA

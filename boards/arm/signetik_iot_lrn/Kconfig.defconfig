@@ -1,0 +1,44 @@
+# //============================================================================//
+# //         Copyright © 2019-2020 Signetik, LLC -- All Rights Reserved         //
+# //----------------------------------------------------------------------------//
+# //                                                              Signetik, LLC //
+# //                                                           www.signetik.com //
+# //                                      SPDX-License-Identifier: BSD-4-Clause //
+# //============================================================================//
+#
+# Kconfig - Signetik SigCell board configuration
+
+if BOARD_SIGNETIK_SIGLRN || BOARD_SIGNETIK_SIGLRN_TEST
+
+config BOARD
+	default "signetik_siglrn"
+
+#if ADC
+
+#config ADC_0
+#	default y
+
+#endif # ADC
+
+#if I2C
+
+#config I2C_2
+#	default n
+
+#endif # I2C
+
+#if PWM
+
+#config PWM_0
+#	default n
+
+#endif # PWM
+
+if SPI
+
+config SPI_0
+	default y
+
+endif # SPI
+
+endif # BOARD_SIGNETIK_SIGLRN || BOARD_SIGNETIK_SIGLRN_TEST
