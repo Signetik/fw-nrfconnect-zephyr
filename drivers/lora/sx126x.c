@@ -48,7 +48,7 @@ BUILD_ASSERT(DT_NUM_INST_STATUS_OKAY(semtech_sx1261) +
 #define	GPIO_ANTENNA_ENABLE_PIN	DT_INST_GPIO_PIN(0,	antenna_enable_gpios)
 #define	GPIO_TX_ENABLE_PIN	DT_INST_GPIO_PIN(0,	tx_enable_gpios)
 #define	GPIO_RX_ENABLE_PIN	DT_INST_GPIO_PIN(0,	rx_enable_gpios)
-#define	GPIO_RADIO_ENABLE_PIN		DT_INST_GPIO_PIN(0,	radio-enable_gpios)
+#define	GPIO_RADIO_ENABLE_PIN		DT_INST_GPIO_PIN(0,	radio_enable_gpios)
 
 #define	DIO2_TX_ENABLE DT_INST_PROP(0, dio2_tx_enable)
 
