@@ -21,6 +21,8 @@ manifest:
   remotes:
     - name: upstream
       url-base: https://github.com/zephyrproject-rtos
+    - name: signetik
+      url-base: git@git.signetik.com:signetik-iot
 
   #
   # Please add items below based on alphabetical order
@@ -108,7 +110,9 @@ manifest:
       revision: de1b85a13032a2de1d8b6695ae5f800b613e739d
       path: modules/lib/open-amp
     - name: loramac-node
-      revision: 3f545d76a2e6d1db83a470ccdb5bebd1f484e137
+      repo-path: sensor/LoRaMac-node
+      remote: signetik
+      revision: develop-lrn-iot
       path: modules/lib/loramac-node
     - name: openthread
       revision: 07f430dac6c400abdd358ba1173c0f94b94a5a80
