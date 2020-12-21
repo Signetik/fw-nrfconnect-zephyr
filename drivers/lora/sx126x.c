@@ -274,6 +274,16 @@ void SX126xWriteBuffer(uint8_t offset, uint8_t *buffer,	uint8_t	size)
 	sx126x_spi_transceive(req, NULL, sizeof(req), buffer, NULL,	size);
 }
 
+void SX126xPwrOn(void)
+{
+#if	HAVE_GPIO_RADIO_ENABLE
+	LOG_DBG("Enabling radio switch");
+	gpio_pin_set(dev_data.radio_enable, GPIO_RADIO_ENABLE_PIN, 0);
+#else
+	LOG_DBG("No	radio switch configured");
+#endif
+}
+
 void SX126xAntSwOn(void)
 {
 #if	HAVE_GPIO_ANTENNA_ENABLE
