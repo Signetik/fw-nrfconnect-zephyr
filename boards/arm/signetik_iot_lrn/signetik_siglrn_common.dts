@@ -68,6 +68,7 @@
 		pwm-led2 = &pwm_ledb;
 		lora0 = &lora;
 		uart0 = &uart0;
+		uart1 = &uart1;
 		wdt = &wdt;
 	};
 
@@ -89,8 +90,8 @@
 	status = "okay";
 };
 
-/* Commands */
-&uart0 {
+/* API Commands */
+&uart1 {
 	compatible = "nordic,nrf-uart";
 	current-speed = <115200>;
 	status = "okay";
@@ -100,9 +101,9 @@
 	cts-pin = <32>;
 };
 
-/* Console */
-&uart1 {
-	compatible = "nordic,nrf-uart";
+/* Debug/Logging Console */
+&uart0 {
+	compatible = "nordic,nrf-uart"; 
 	status = "okay";
 	current-speed = <115200>;
 	tx-pin = <17>;
