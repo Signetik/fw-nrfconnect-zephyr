@@ -94,10 +94,10 @@
 &uart1 {
 	current-speed = <115200>;
 	status = "okay";
-	tx-pin = <10>;
-	rx-pin = <13>;
-	rts-pin = <20>;
-	cts-pin = <32>;
+	tx-pin = <42>;
+	rx-pin = <45>;
+/*	rts-pin = <32>;
+	cts-pin = <20>; */
 };
 
 /* Debug/Logging Console */
