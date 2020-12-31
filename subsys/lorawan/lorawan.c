@@ -273,8 +273,10 @@ int lorawan_set_class(enum lorawan_class dev_class)
 	case LORAWAN_CLASS_A:
 		mib_req.Param.Class = CLASS_A;
 		break;
-	case LORAWAN_CLASS_B:
 	case LORAWAN_CLASS_C:
+		mib_req.Param.Class = CLASS_C;
+		break;
+	case LORAWAN_CLASS_B:
 		LOG_ERR("Device class not supported yet!");
 		return -ENOTSUP;
 	default:
