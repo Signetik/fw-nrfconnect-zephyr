@@ -340,7 +340,7 @@ int lorawan_send(uint8_t port, uint8_t *data, uint8_t len, uint8_t flags)
 	k_mutex_lock(&lorawan_send_mutex, K_FOREVER);
 
 	status = LoRaMacQueryTxPossible(len, &txInfo);
-	if (status != LORAMAC_STATUS_OK) {
+	if (status != LORAMAC_STATUS_OK && false) {
 		/*
 		 * If status indicates an error, then most likely the payload
 		 * has exceeded the maximum possible length for the current
