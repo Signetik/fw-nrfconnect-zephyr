@@ -433,6 +433,18 @@ int lorawan_start(void)
 	return 0;
 }
 
+int lorawan_set_channelmask(uint16_t mask[5])
+{
+	MibRequestConfirm_t mib_req;
+
+	mib_req.Type = MIB_CHANNELS_MASK;
+	mib_req.Param.ChannelsMask = &mask[0];
+	//mib_req.Param.ChannelsDefaultMask = channels;
+	LoRaMacMibSetRequestConfirm(&mib_req);
+	LoRaMacMibGetRequestConfirm(&mib_req);
+	return 0;
+}
+
 static int lorawan_init(const struct device *dev)
 {
 	LoRaMacStatus_t status;

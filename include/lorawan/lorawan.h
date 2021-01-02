@@ -187,6 +187,8 @@ void lorawan_enable_adr(bool enable);
  */
 int lorawan_set_datarate(enum lorawan_datarate dr);
 
+int lorawan_set_channelmask(uint16_t mask[5]);
+
 #ifdef __cplusplus
 }
 #endif
