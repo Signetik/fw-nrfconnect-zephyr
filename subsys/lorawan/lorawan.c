@@ -56,7 +56,7 @@ K_MUTEX_DEFINE(lorawan_send_mutex);
 static enum lorawan_datarate lorawan_datarate = LORAWAN_DR_0;
 static uint8_t lorawan_conf_msg_tries = 1;
 static bool lorawan_adr_enable;
-
+static lorawan_rxcb_f lorawan_rxcb = NULL;
 
 
 static LoRaMacPrimitives_t macPrimitives;
@@ -100,6 +100,8 @@ static void McpsIndication(McpsIndication_t *mcpsIndication)
 
 	/* TODO: Check MCPS Indication type */
 	if (mcpsIndication->RxData == true) {
+		if (lorawan_rxcb)
+			lorawan_rxcb(mcpsIndication->Buffer, mcpsIndication->BufferSize);
 		if (mcpsIndication->BufferSize != 0) {
 			LOG_DBG("Rx Data: %s",
 				log_strdup(mcpsIndication->Buffer));
@@ -443,6 +445,11 @@ int lorawan_set_channelmask(uint16_t mask[5])
 	LoRaMacMibSetRequestConfirm(&mib_req);
 	LoRaMacMibGetRequestConfirm(&mib_req);
 	return 0;
+}
+
+void lorawan_set_rxcb(lorawan_rxcb_f rxcb)
+{
+	lorawan_rxcb = rxcb;
 }
 
 static int lorawan_init(const struct device *dev)
