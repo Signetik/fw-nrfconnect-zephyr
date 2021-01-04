@@ -137,7 +137,7 @@
 		label = "sx1262";
 		reset-gpios = <&gpio0 8 GPIO_ACTIVE_LOW>;
 		busy-gpios = <&gpio1 9 0>;
-		antenna-enable-gpios = <&gpio1 7 0>;
+		/*antenna-enable-gpios = <&gpio1 7 0>;*/
 		dio1-gpios = <&gpio0 14 0>;
 		radio-enable-gpios = <&gpio0 7 0>;
 		spi-max-frequency = <1000000>;
