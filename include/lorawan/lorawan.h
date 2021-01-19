@@ -103,6 +103,7 @@ struct lorawan_join_config {
 	enum lorawan_act_type mode;
 };
 
+typedef void (*lorawan_txcb_f)(bool success, uint32_t channel, uint8_t data_rate);
 typedef void (*lorawan_rxcb_f)(uint8_t *buffer, int sz);
 
 /**
@@ -190,6 +191,7 @@ void lorawan_enable_adr(bool enable);
 int lorawan_set_datarate(enum lorawan_datarate dr);
 
 int lorawan_set_channelmask(uint16_t mask[5]);
+void lorawan_set_txcb(lorawan_txcb_f txcb);
 void lorawan_set_rxcb(lorawan_rxcb_f rxcb);
 
 #ifdef __cplusplus

@@ -56,6 +56,7 @@ K_MUTEX_DEFINE(lorawan_send_mutex);
 static enum lorawan_datarate lorawan_datarate = LORAWAN_DR_0;
 static uint8_t lorawan_conf_msg_tries = 1;
 static bool lorawan_adr_enable;
+static lorawan_txcb_f lorawan_txcb = NULL;
 static lorawan_rxcb_f lorawan_rxcb = NULL;
 
 
@@ -80,8 +81,17 @@ static void McpsConfirm(McpsConfirm_t *mcpsConfirm)
 	if (mcpsConfirm->Status != LORAMAC_EVENT_INFO_STATUS_OK) {
 		LOG_ERR("McpsRequest failed : %s",
 			lorawan_eventinfo2str(mcpsConfirm->Status));
+        if (mcpsConfirm->McpsRequest == MCPS_CONFIRMED || mcpsConfirm->McpsRequest == MCPS_UNCONFIRMED) {
+		    LOG_DBG("McpsRequest TX failed!");
+			    lorawan_txcb(false, 0, 0);
+        }
 	} else {
 		LOG_DBG("McpsRequest success!");
+        if (mcpsConfirm->McpsRequest == MCPS_CONFIRMED || mcpsConfirm->McpsRequest == MCPS_UNCONFIRMED) {
+		    LOG_DBG("McpsRequest TX success!");
+		    if (lorawan_txcb)
+			    lorawan_txcb(true, mcpsConfirm->Channel, mcpsConfirm->Datarate);
+        }
 	}
 
 	last_mcps_confirm_status = mcpsConfirm->Status;
@@ -445,6 +455,11 @@ int lorawan_set_channelmask(uint16_t mask[5])
 	LoRaMacMibSetRequestConfirm(&mib_req);
 	LoRaMacMibGetRequestConfirm(&mib_req);
 	return 0;
+}
+
+void lorawan_set_txcb(lorawan_txcb_f txcb)
+{
+	lorawan_txcb = txcb;
 }
 
 void lorawan_set_rxcb(lorawan_rxcb_f rxcb)
