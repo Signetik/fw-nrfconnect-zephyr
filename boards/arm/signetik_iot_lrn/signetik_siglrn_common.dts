@@ -8,7 +8,7 @@
 
 / {
 	model = "Signetik Sig LRN";
-	compatible = "nordic,nrf52840-qiaa", "nordic,nrf52840";
+	compatible = "nordic,nrf52840-siglrn";
 
 	chosen {
 		zephyr,console = &uart0;
