@@ -22,7 +22,7 @@ manifest:
     - name: upstream
       url-base: https://github.com/zephyrproject-rtos
     - name: signetik
-      url-base: git@git.signetik.com:signetik-iot
+      url-base: git@github.com:Signetik
 
   #
   # Please add items below based on alphabetical order
