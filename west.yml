@@ -110,7 +110,7 @@ manifest:
       revision: de1b85a13032a2de1d8b6695ae5f800b613e739d
       path: modules/lib/open-amp
     - name: loramac-node
-      repo-path: sensor/LoRaMac-node
+      repo-path: LoRaMac-node
       remote: signetik
       revision: develop-lrn-iot
       path: modules/lib/loramac-node
